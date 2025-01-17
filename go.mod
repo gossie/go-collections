@@ -1,3 +1,3 @@
-module github.com/gossie/go-collections
+module github.com/gossie/collections
 
-go 1.18
+go 1.21

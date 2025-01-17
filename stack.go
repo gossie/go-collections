@@ -1,13 +1,13 @@
-package gocollections
+package collections
 
 import (
 	"errors"
-	"strconv"
+	"fmt"
 )
 
 type stack[T any] []T
 
-func CreateNew[T any]() stack[T] {
+func NewStack[T any]() stack[T] {
 	return []T{}
 }
 
@@ -38,7 +38,7 @@ func (s *stack[T]) Pop() (T, error) {
 
 func (s *stack[T]) PopMultiple(amount int) (stack[T], error) {
 	if s.Len() < amount {
-		return nil, errors.New("stack does not contain " + strconv.Itoa(amount) + " elements")
+		return nil, fmt.Errorf("stack does not contain %v elements", amount)
 	}
 	result := append(stack[T]{}, (*s)[0:amount]...)
 	*s = (*s)[amount:]

@@ -6,23 +6,23 @@ import (
 	"github.com/gossie/collections"
 )
 
-func TestThatStackIsEmpty(t *testing.T) {
-	s := collections.NewStack[string]()
+func TestThatQueueIsEmpty(t *testing.T) {
+	s := collections.NewQueue[string]()
 	if !s.Empty() {
-		t.Fatal("stack is not empty")
+		t.Fatal("Queue is not empty")
 	}
 }
 
-func TestThatStackIsNotEmpty(t *testing.T) {
-	s := collections.NewStack[string]()
+func TestThatQueueIsNotEmpty(t *testing.T) {
+	s := collections.NewQueue[string]()
 	s.Push("eins")
 	if s.Empty() {
-		t.Fatal("stack is empty")
+		t.Fatal("Queue is empty")
 	}
 }
 
-func TestStackLength(t *testing.T) {
-	s := collections.NewStack[string]()
+func TestQueueLength(t *testing.T) {
+	s := collections.NewQueue[string]()
 	s.Push("eins")
 	s.Push("zwei")
 	if s.Len() != 2 {
@@ -30,8 +30,8 @@ func TestStackLength(t *testing.T) {
 	}
 }
 
-func TestStackPushPeek(t *testing.T) {
-	s := collections.NewStack[string]()
+func TestQueuePushPeek(t *testing.T) {
+	s := collections.NewQueue[string]()
 	s.Push("eins")
 	s.Push("zwei")
 	value, err := s.Peek()
@@ -40,7 +40,7 @@ func TestStackPushPeek(t *testing.T) {
 		t.Fatalf("length = %v", s.Len())
 	}
 
-	if value != "zwei" {
+	if value != "eins" {
 		t.Fatalf("value = %v", value)
 	}
 
@@ -49,21 +49,21 @@ func TestStackPushPeek(t *testing.T) {
 	}
 }
 
-func TestStackPeekError(t *testing.T) {
-	s := collections.NewStack[string]()
+func TestQueuePeekError(t *testing.T) {
+	s := collections.NewQueue[string]()
 	value, err := s.Peek()
 
 	if value != "" {
 		t.Fatalf("value = %v", value)
 	}
 
-	if err.Error() != "stack is empty" {
+	if err.Error() != "queue is empty" {
 		t.Fatalf("err = %v", err)
 	}
 }
 
-func TestStackPushPop(t *testing.T) {
-	s := collections.NewStack[string]()
+func TestQueuePushPop(t *testing.T) {
+	s := collections.NewQueue[string]()
 	s.Push("eins")
 	s.Push("zwei")
 	value, err := s.Pop()
@@ -72,7 +72,7 @@ func TestStackPushPop(t *testing.T) {
 		t.Fatalf("length = %v", s.Len())
 	}
 
-	if value != "zwei" {
+	if value != "eins" {
 		t.Fatalf("value = %v", value)
 	}
 
@@ -81,29 +81,29 @@ func TestStackPushPop(t *testing.T) {
 	}
 }
 
-func TestStackPopError(t *testing.T) {
-	s := collections.NewStack[string]()
+func TestQueuePopError(t *testing.T) {
+	s := collections.NewQueue[string]()
 	value, err := s.Pop()
 
 	if value != "" {
 		t.Fatalf("value = %v", value)
 	}
 
-	if err.Error() != "stack is empty" {
+	if err.Error() != "queue is empty" {
 		t.Fatalf("err = %v", err)
 	}
 }
 
-func TestStackPushAll(t *testing.T) {
-	s1 := collections.NewStack[string]()
+func TestQueuePushAll(t *testing.T) {
+	s1 := collections.NewQueue[string]()
 	s1.Push("eins")
 	s1.Push("zwei")
 
-	s2 := collections.NewStack[string]()
+	s2 := collections.NewQueue[string]()
 	s2.PushAll(s1)
 
 	value1, _ := s2.Pop()
-	if value1 != "zwei" {
+	if value1 != "eins" {
 		t.Fatalf("value1 = %v", value1)
 	}
 
@@ -112,7 +112,7 @@ func TestStackPushAll(t *testing.T) {
 	}
 
 	value2, _ := s2.Pop()
-	if value2 != "eins" {
+	if value2 != "zwei" {
 		t.Fatalf("value2 = %v", value2)
 	}
 
@@ -122,8 +122,8 @@ func TestStackPushAll(t *testing.T) {
 
 }
 
-func TestStackPopMultiple(t *testing.T) {
-	s1 := collections.NewStack[string]()
+func TestQueuePopMultiple(t *testing.T) {
+	s1 := collections.NewQueue[string]()
 	s1.Push("eins")
 	s1.Push("zwei")
 	s1.Push("drei")
@@ -135,7 +135,7 @@ func TestStackPopMultiple(t *testing.T) {
 	}
 
 	value1, _ := s1.Pop()
-	if value1 != "eins" {
+	if value1 != "drei" {
 		t.Fatalf("value1 = %v", value1)
 	}
 
@@ -144,7 +144,7 @@ func TestStackPopMultiple(t *testing.T) {
 	}
 
 	value2, _ := s2.Pop()
-	if value2 != "drei" {
+	if value2 != "eins" {
 		t.Fatalf("value2 = %v", value2)
 	}
 
@@ -162,14 +162,14 @@ func TestStackPopMultiple(t *testing.T) {
 	}
 }
 
-func TestStackPopMultipleError(t *testing.T) {
-	s1 := collections.NewStack[string]()
+func TestQueuePopMultipleError(t *testing.T) {
+	s1 := collections.NewQueue[string]()
 	s1.Push("eins")
 	s1.Push("zwei")
 
 	_, err := s1.PopMultiple(3)
 
-	if err.Error() != "stack does not contain 3 elements" {
+	if err.Error() != "queue does not contain 3 elements" {
 		t.Fatalf("err = %v", err)
 	}
 }
